@@ -10,6 +10,9 @@
 		D02EAD062C21B74F00406EE3 /* JTNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D02EACFD2C21B74F00406EE3 /* JTNetwork.framework */; };
 		D02EAD0B2C21B74F00406EE3 /* JTNetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */; };
 		D02EAD0C2C21B74F00406EE3 /* JTNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = D02EAD002C21B74F00406EE3 /* JTNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D02EAD162C21B7BC00406EE3 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */; };
+		D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD172C21B8A400406EE3 /* RequestType.swift */; };
+		D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +30,9 @@
 		D02EAD002C21B74F00406EE3 /* JTNetwork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JTNetwork.h; sourceTree = "<group>"; };
 		D02EAD052C21B74F00406EE3 /* JTNetworkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JTNetworkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JTNetworkTests.swift; sourceTree = "<group>"; };
+		D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		D02EAD172C21B8A400406EE3 /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
+		D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				D02EAD002C21B74F00406EE3 /* JTNetwork.h */,
+				D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */,
+				D02EAD172C21B8A400406EE3 /* RequestType.swift */,
+				D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */,
 			);
 			path = JTNetwork;
 			sourceTree = "<group>";
@@ -144,6 +153,7 @@
 				TargetAttributes = {
 					D02EACFC2C21B74F00406EE3 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1520;
 					};
 					D02EAD042C21B74F00406EE3 = {
 						CreatedOnToolsVersion = 15.2;
@@ -191,6 +201,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D02EAD162C21B7BC00406EE3 /* HTTPClient.swift in Sources */,
+				D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */,
+				D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -341,6 +354,7 @@
 		D02EAD102C21B74F00406EE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -364,6 +378,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -372,6 +387,7 @@
 		D02EAD112C21B74F00406EE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -403,6 +419,7 @@
 		D02EAD132C21B74F00406EE3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 65QQ97XV3Q;
@@ -419,6 +436,7 @@
 		D02EAD142C21B74F00406EE3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 65QQ97XV3Q;
