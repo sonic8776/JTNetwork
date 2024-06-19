@@ -31,7 +31,7 @@ class URLSessionHTTPClient: HTTPClient {
             }
             
             completion(.success((data, response)))
-        }
+        }.resume()
     }
 
     

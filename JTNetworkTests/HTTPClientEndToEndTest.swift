@@ -15,7 +15,6 @@ class HTTPClientEndToEndTest: XCTestCase {
         let sut = makeSUT()
         let requestType = RequestTypeSpy(page: "1")
         let expectation = expectation(description: "Wait for completion!")
-        print("fullURL = \(requestType.fullURL)")
         sut.request(withRequestType: requestType) { result in
             switch result {
             case let .success(data, _):
@@ -35,7 +34,7 @@ class HTTPClientEndToEndTest: XCTestCase {
                 assertionFailure("The API should be successful!")
             }
         }
-        wait(for: [expectation], timeout: 60)
+        wait(for: [expectation], timeout: 30)
     }
 }
 
