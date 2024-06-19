@@ -15,7 +15,7 @@ enum HTTPMethod: String {
 protocol RequestType {
     var baseURL: URL { get } // domain URL https://crypto.com
     var path: String { get } // /userLogin
-    var queryItems: [URLQueryItem] { get set } // https://crypto.com/userLogin?account=judy:passwork=1234
+    var queryItems: [URLQueryItem] { get set } // https://crypto.com/userLogin?account=judy&passwork=1234
     var fullURL: URL { get } // base + path + queryItems
     var method: HTTPMethod { get } // GET, POST
     var body: Data? { get } // POST parameters

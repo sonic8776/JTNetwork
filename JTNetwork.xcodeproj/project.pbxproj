@@ -13,6 +13,7 @@
 		D02EAD162C21B7BC00406EE3 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */; };
 		D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD172C21B8A400406EE3 /* RequestType.swift */; };
 		D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */; };
+		D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,6 +34,7 @@
 		D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		D02EAD172C21B8A400406EE3 /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientEndToEndTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */,
+				D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */,
 			);
 			path = JTNetworkTests;
 			sourceTree = "<group>";
@@ -212,6 +215,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D02EAD0B2C21B74F00406EE3 /* JTNetworkTests.swift in Sources */,
+				D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
