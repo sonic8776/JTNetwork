@@ -72,4 +72,46 @@ private extension URLSessionHTTPClientTest {
 // MARK: - Factory Methods
 private extension URLSessionHTTPClientTest {
     
+    func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
+        let session = URLSession(configuration: .ephemeral)
+        let sut = URLSessionHTTPClient(session: session)
+        return sut
+    }
+    
+    func makeResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Result<(Data, HTTPURLResponse), HTTPClientError> {
+        URLProtocolStub.stub(data: data, response: response, error: error)
+        let sut = makeSUT(file: file, line: line)
+        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        let expectation = expectation(description: "Wait for completion...")
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        return receivedResult
+    }
+    
+    func makeErrorResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> HTTPClientError? {
+        let result = makeResult(with: requestType, data: data, response: response, error: error)
+        switch result {
+        case .failure(let error):
+            return error
+            
+        default:
+            XCTFail("Should return error: \(String(describing: error))")
+            return nil
+        }
+    }
+    
+    func makeValueResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> (Data, HTTPURLResponse)? {
+        let result = makeResult(with: requestType, data: data, response: response, error: error)
+        switch result {
+        case let .success((data, httpURLResponse)):
+            return (data, httpURLResponse)
+            
+        default:
+            XCTFail("Should return data: \(data) and response: \(response)!")
+            return nil
+        }
+    }
 }
