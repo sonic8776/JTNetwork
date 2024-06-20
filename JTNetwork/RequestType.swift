@@ -25,7 +25,7 @@ protocol RequestType {
 
 extension RequestType {
     var fullURL: URL {
-        // Builder pattern
+        // Builder pattern 可以再被修改 / factory 創建好不能再被修改
         var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: false)
         components?.path += path
         components?.queryItems = queryItems

@@ -61,7 +61,8 @@ private extension HTTPClientEndToEndTest {
     }
     
     func makeSUT() -> HTTPClient {
-        let sut = URLSessionHTTPClient(session: .shared)
+        let session = URLSession(configuration: .ephemeral) // 確保沒有 cache
+        let sut = URLSessionHTTPClient(session: session)
         return sut
     }
     
