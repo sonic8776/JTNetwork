@@ -14,6 +14,7 @@
 		D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD172C21B8A400406EE3 /* RequestType.swift */; };
 		D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */; };
 		D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */; };
+		D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		D02EAD172C21B8A400406EE3 /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientEndToEndTest.swift; sourceTree = "<group>"; };
+		D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */,
 				D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */,
+				D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */,
 			);
 			path = JTNetworkTests;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			files = (
 				D02EAD0B2C21B74F00406EE3 /* JTNetworkTests.swift in Sources */,
 				D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */,
+				D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +388,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.judy.JTNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -419,6 +425,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.judy.JTNetwork;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -439,6 +447,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.judy.JTNetworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -458,6 +468,8 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.judy.JTNetworkTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

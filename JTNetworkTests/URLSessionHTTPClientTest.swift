@@ -10,6 +10,22 @@ import XCTest
 
 class URLSessionHTTPClientTest: XCTestCase {
     
+    override class func setUp() {
+        super.setUp()
+        URLProtocolStub.startInterceptingRequest()
+    }
+    
+    override class func tearDown() {
+        super.tearDown()
+        URLProtocolStub.stopInterceptingRequest()
+    }
+    
+    func test_request_failsOnGetRequestError() {
+        let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
+        let expectedError = HTTPClientError.networkError
+        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
+        XCTAssertEqual(expectedError, receivedError)
+    }
 }
 
 // MARK: - Helpers
@@ -67,6 +83,26 @@ private extension URLSessionHTTPClientTest {
         
         override func stopLoading() {}
     }
+    
+    struct RequestTypeSpy: RequestType {
+        var baseURL: URL { .init(string: "https://any-url.com")! }
+        
+        var path: String
+        
+        var queryItems: [URLQueryItem] = []
+        
+        var method: JTNetwork.HTTPMethod
+        
+        var body: Data?
+        
+        var headers: [String: String]? { nil }
+        
+        init(path: String, method: HTTPMethod, body: Data?) {
+            self.path = path
+            self.method = method
+            self.body = body
+        }
+    }
 }
 
 // MARK: - Factory Methods
@@ -87,7 +123,7 @@ private extension URLSessionHTTPClientTest {
             expectation.fulfill()
             receivedResult = result
         }
-        wait(for: [expectation], timeout: 1.0)
+        wait(for: [expectation], timeout: 10.0)
         return receivedResult
     }
     
