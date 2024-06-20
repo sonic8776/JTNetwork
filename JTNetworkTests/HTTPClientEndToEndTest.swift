@@ -15,25 +15,31 @@ class HTTPClientEndToEndTest: XCTestCase {
         let sut = makeSUT()
         let requestType = RequestTypeSpy(page: "1")
         let expectation = expectation(description: "Wait for completion!")
+        
         sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            
             switch result {
-            case let .success(data, _):
-                expectation.fulfill()
+            case let .success((data, _)):
+            
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-                    print(json)
-                    let jsonCount = json?.keys.count // 幾筆資料
-                    XCTAssertEqual(jsonCount, 10)
+                    let json = try JSONSerialization.jsonObject(with: data)
+                    if let jsonArray = json as? [[String: Any]] {
+                        let elementCount = jsonArray.count
+                        print("ElementCount = \(elementCount)")
+                        XCTAssertEqual(elementCount, 10)
+                    } else {
+                        XCTFail("Should successfully parse json to array")
+                    }
                     
                 } catch {
-                    assertionFailure("The API should be successful!")
+                    XCTFail("The data should be parsed to Json!")
                 }
-                
-                return
             default:
-                assertionFailure("The API should be successful!")
+                XCTFail("The API should be successful!")
             }
         }
+        
         wait(for: [expectation], timeout: 30)
     }
 }
