@@ -8,7 +8,7 @@
 import XCTest
 @testable import JTNetwork
 
-class URLSessionHTTPClientTest: XCTestCase {
+class URLSessionHTTPClientTests: XCTestCase {
     static var sessionConfiguration: URLSessionConfiguration = .ephemeral
     override class func setUp() {
         super.setUp()
@@ -43,15 +43,11 @@ private extension URLSessionHTTPClientTests {
             stub = ResponeStub.init(data: data, response: response, error: error)
         }
         
-        static func startInterceptingRequest() {
-            URLProtocol.registerClass(URLProtocolStub.self)
-        }
-        
-        static func startInterceptingRequest(forConfiguration configuration: URLSessionConfiguration) {
+        class func startInterceptingRequest(forConfiguration configuration: URLSessionConfiguration) {
             configuration.protocolClasses = [URLProtocolStub.self]
         }
         
-        static func stopInterceptingRequest() {
+        class func stopInterceptingRequest() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
             stub = nil
         }
@@ -110,9 +106,9 @@ private extension URLSessionHTTPClientTests {
 }
 
 // MARK: - Factory Methods
-private extension URLSessionHTTPClientTest {
+private extension URLSessionHTTPClientTests {
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
-        let session = URLSession(configuration: URLSessionHTTPClientTest.sessionConfiguration)
+        let session = URLSession(configuration: URLSessionHTTPClientTests.sessionConfiguration)
         let sut = URLSessionHTTPClient(session: session)
         return sut
     }
@@ -126,7 +122,7 @@ private extension URLSessionHTTPClientTest {
             expectation.fulfill()
             receivedResult = result
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 1.0)
         return receivedResult
     }
     
