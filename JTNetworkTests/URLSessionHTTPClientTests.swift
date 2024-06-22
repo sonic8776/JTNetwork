@@ -1,5 +1,5 @@
 //
-//  URLSessionHTTPClientTest.swift
+//  URLSessionHTTPClientTests.swift
 //  JTNetworkTests
 //
 //  Created by Judy Tsai on 2024/6/20.
@@ -9,10 +9,10 @@ import XCTest
 @testable import JTNetwork
 
 class URLSessionHTTPClientTest: XCTestCase {
-    
+    static var sessionConfiguration: URLSessionConfiguration = .ephemeral
     override class func setUp() {
         super.setUp()
-        URLProtocolStub.startInterceptingRequest()
+        URLProtocolStub.startInterceptingRequest(forConfiguration: sessionConfiguration)
     }
     
     override class func tearDown() {
@@ -29,22 +29,26 @@ class URLSessionHTTPClientTest: XCTestCase {
 }
 
 // MARK: - Helpers
-private extension URLSessionHTTPClientTest {
-    struct RequestAndResponeStub {
+private extension URLSessionHTTPClientTests {
+    struct ResponeStub {
         let data: Data?
         let response: URLResponse?
         let error: Error?
     }
     
     class URLProtocolStub: URLProtocol {
-        private static var stub: RequestAndResponeStub?
+        private static var stub: ResponeStub?
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
-            stub = RequestAndResponeStub.init(data: data, response: response, error: error)
+            stub = ResponeStub.init(data: data, response: response, error: error)
         }
         
         static func startInterceptingRequest() {
             URLProtocol.registerClass(URLProtocolStub.self)
+        }
+        
+        static func startInterceptingRequest(forConfiguration configuration: URLSessionConfiguration) {
+            configuration.protocolClasses = [URLProtocolStub.self]
         }
         
         static func stopInterceptingRequest() {
@@ -107,9 +111,8 @@ private extension URLSessionHTTPClientTest {
 
 // MARK: - Factory Methods
 private extension URLSessionHTTPClientTest {
-    
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
-        let session = URLSession(configuration: .ephemeral)
+        let session = URLSession(configuration: URLSessionHTTPClientTest.sessionConfiguration)
         let sut = URLSessionHTTPClient(session: session)
         return sut
     }

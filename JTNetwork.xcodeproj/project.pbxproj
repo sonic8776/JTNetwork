@@ -13,8 +13,8 @@
 		D02EAD162C21B7BC00406EE3 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */; };
 		D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD172C21B8A400406EE3 /* RequestType.swift */; };
 		D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */; };
-		D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */; };
-		D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */; };
+		D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */; };
+		D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,8 +35,8 @@
 		D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		D02EAD172C21B8A400406EE3 /* RequestType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType.swift; sourceTree = "<group>"; };
 		D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
-		D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientEndToEndTest.swift; sourceTree = "<group>"; };
-		D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTest.swift; sourceTree = "<group>"; };
+		D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientEndToEndTests.swift; sourceTree = "<group>"; };
+		D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,8 +91,8 @@
 			isa = PBXGroup;
 			children = (
 				D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */,
-				D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift */,
-				D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTest.swift */,
+				D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */,
+				D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */,
 			);
 			path = JTNetworkTests;
 			sourceTree = "<group>";
@@ -218,8 +218,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D02EAD0B2C21B74F00406EE3 /* JTNetworkTests.swift in Sources */,
-				D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTest.swift in Sources */,
-				D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTest.swift in Sources */,
+				D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift in Sources */,
+				D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -366,7 +366,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 65QQ97XV3Q;
+				DEVELOPMENT_TEAM = WAGW44Z6JC;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -404,7 +404,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 65QQ97XV3Q;
+				DEVELOPMENT_TEAM = WAGW44Z6JC;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -439,7 +439,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 65QQ97XV3Q;
+				DEVELOPMENT_TEAM = WAGW44Z6JC;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.1;
@@ -461,7 +461,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 65QQ97XV3Q;
+				DEVELOPMENT_TEAM = WAGW44Z6JC;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
 				MACOSX_DEPLOYMENT_TARGET = 14.1;

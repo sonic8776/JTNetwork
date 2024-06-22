@@ -1,5 +1,5 @@
 //
-//  HTTPClientEndToEndTest.swift
+//  HTTPClientEndToEndTests.swift
 //  JTNetworkTests
 //
 //  Created by Judy Tsai on 2024/6/18.
@@ -8,7 +8,7 @@
 import XCTest
 @testable import JTNetwork
 
-class HTTPClientEndToEndTest: XCTestCase {
+class HTTPClientEndToEndTests: XCTestCase {
     // GET https://620962796df46f0017f4c4db.mockapi.io/users/userList?page=1&limit=10
     
     func test_request_onSuccessfulRequestCase() {
@@ -44,7 +44,7 @@ class HTTPClientEndToEndTest: XCTestCase {
     }
 }
 
-private extension HTTPClientEndToEndTest {
+private extension HTTPClientEndToEndTests {
     struct RequestTypeSpy: RequestType {
         init(page: String) {
             queryItems =  [
