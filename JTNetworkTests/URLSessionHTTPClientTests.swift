@@ -114,6 +114,9 @@ class URLSessionHTTPClientTests: XCTestCase {
             XCTAssertEqual(httpURLResposne.url, expectedResponse.url)
             XCTAssertEqual(httpURLResposne.statusCode, expectedResponse.statusCode)
             
+            // 另一種寫法
+//            let isEqual = httpURLResposne == expectedResponse
+//            XCTAssertTrue(isEqual)
         default:
             XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
         }
@@ -252,3 +255,10 @@ private extension URLSessionHTTPClientTests {
         }
     }
 }
+
+//extension HTTPURLResponse: Equatable {
+//    
+//    static func == (lhs: HTTPURLResponse, rhs: HTTPURLResponse) -> Bool {
+//        lhs.statusCode == rhs.statusCode && lhs.url == rhs.url
+//    }
+//}
