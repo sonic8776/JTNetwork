@@ -47,72 +47,18 @@ class URLSessionHTTPClientTests: XCTestCase {
     // MARK: - Successful Cases
     
     func test_request_succeedOnGetHTTPURLResponseWithData() {
-        // Arrange
         let requestType = anyGETRequest
         let expectedData = anyData
         let expectedResponse = anyGETHttpURLResponse
-        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
-        let sut = makeSUT()
-        var receivedResult: HTTPClientResult!
-        let expectation = expectation(description: "Wait for completion...")
-        
-        // Action
-        sut.request(withRequestType: requestType) { result in
-            expectation.fulfill()
-            receivedResult = result
-        }
-        wait(for: [expectation], timeout: 1.0)
-        
-        // Assert
-        switch receivedResult {
-            
-        case let .success((data, httpURLResposne)):
-            XCTAssertEqual(data, expectedData)
-            XCTAssertEqual(httpURLResposne.url, expectedResponse.url)
-            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse.statusCode)
-            
-            // 另一種寫法
-//            let isEqual = httpURLResposne == expectedResponse
-//            XCTAssertTrue(isEqual)
-        default:
-            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
-        }
+        assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
     
     func test_request_succeedOnPostHTTPURLResponseWithData() {
-        // Arrange
         let requestType = anyPostRequest
         let expectedData = anyData
         let expectedResponse = anyPostHttpURLResponse
-        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
-        let sut = makeSUT()
-        var receivedResult: HTTPClientResult!
-        let expectation = expectation(description: "Wait for completion...")
-        
-        // Action
-        sut.request(withRequestType: requestType) { result in
-            expectation.fulfill()
-            receivedResult = result
-        }
-        wait(for: [expectation], timeout: 1.0)
-        
-        // Assert
-        switch receivedResult {
-            
-        case let .success((data, httpURLResposne)):
-            XCTAssertEqual(data, expectedData)
-            XCTAssertEqual(httpURLResposne.url, expectedResponse.url)
-            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse.statusCode)
-            
-            // 另一種寫法
-//            let isEqual = httpURLResposne == expectedResponse
-//            XCTAssertTrue(isEqual)
-        default:
-            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
-        }
+        assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
-    
-    
 }
 
 // MARK: - Helpers
@@ -243,6 +189,36 @@ private extension URLSessionHTTPClientTests {
             XCTAssertEqual(expectedError, receivedError)
         default:
             XCTFail("Should receive error: \(expectedError)")
+        }
+    }
+    
+    func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?) {
+        // Arrange
+        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
+        let sut = makeSUT()
+        var receivedResult: HTTPClientResult!
+        let expectation = expectation(description: "Wait for completion...")
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+            
+        case let .success((data, httpURLResposne)):
+            XCTAssertEqual(data, expectedData)
+            XCTAssertEqual(httpURLResposne.url, expectedResponse?.url)
+            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse?.statusCode)
+            
+            // 另一種寫法
+//            let isEqual = httpURLResposne == expectedResponse
+//            XCTAssertTrue(isEqual)
+        default:
+            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
         }
     }
     
