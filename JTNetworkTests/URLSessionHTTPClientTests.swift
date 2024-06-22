@@ -44,7 +44,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         assertOnErrorResult(requestType: requestType, expectedError: expectedError)
     }
     
-    // MARK: - Successful Cases
+    // MARK: - Happy Cases
     
     func test_request_succeedOnGetHTTPURLResponseWithData() {
         let requestType = anyGETRequest
@@ -59,6 +59,16 @@ class URLSessionHTTPClientTests: XCTestCase {
         let expectedResponse = anyPostHttpURLResponse
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
+    
+    // MARK: - Edge Cases for successfully response
+    
+    func test_request_succeedWithNilDataOnGetHTTPURLResponseWithEmptyData() {
+        let requestType = anyGETRequest
+        let expectedResponse = anyGETHttpURLResponse
+        let expectedData = Data()
+        assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
+    }
+    
 }
 
 // MARK: - Helpers
