@@ -56,6 +56,31 @@ class URLSessionHTTPClientTests: XCTestCase {
 //        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
 //        XCTAssertEqual(expectedError, receivedError)
     }
+    
+    func test_request_failsOnPostRequestError() {
+        // Arrange
+        let requestType = RequestTypeSpy(path: "/any-path", method: .post, body: nil)
+        let expectedError = HTTPClientError.networkError
+        let expectation = expectation(description: "Wait for completion...")
+        URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
+        let sut = makeSUT()
+        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+        case let .failure(receivedError):
+            XCTAssertEqual(expectedError, receivedError)
+        default:
+            XCTFail("Should receive error: \(expectedError)")
+        }
+    }
 }
 
 // MARK: - Helpers
