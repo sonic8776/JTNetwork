@@ -69,6 +69,12 @@ class URLSessionHTTPClientTests: XCTestCase {
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
     
+    func test_request_succeedWithNilDataOnPostHTTPURLResponseWithEmptyData() {
+        let requestType = anyPostRequest
+        let expectedResponse = anyPostHttpURLResponse
+        let expectedData = Data()
+        assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
+    }
 }
 
 // MARK: - Helpers
