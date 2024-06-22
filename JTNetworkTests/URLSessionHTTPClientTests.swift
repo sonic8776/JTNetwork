@@ -121,6 +121,41 @@ class URLSessionHTTPClientTests: XCTestCase {
             XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
         }
     }
+    
+    func test_request_succeedOnPostHTTPURLResponseWithData() {
+        // Arrange
+        let requestType = anyPostRequest
+        let expectedData = anyData
+        let expectedResponse = anyPostHttpURLResponse
+        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
+        let sut = makeSUT()
+        var receivedResult: HTTPClientResult!
+        let expectation = expectation(description: "Wait for completion...")
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+            
+        case let .success((data, httpURLResposne)):
+            XCTAssertEqual(data, expectedData)
+            XCTAssertEqual(httpURLResposne.url, expectedResponse.url)
+            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse.statusCode)
+            
+            // 另一種寫法
+//            let isEqual = httpURLResposne == expectedResponse
+//            XCTAssertTrue(isEqual)
+        default:
+            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
+        }
+    }
+    
+    
 }
 
 // MARK: - Helpers
@@ -203,13 +238,22 @@ private extension URLSessionHTTPClientTests {
 // MARK: - Factory Methods
 private extension URLSessionHTTPClientTests {
     var anyData: Data { .init("any-data".utf8) }
+    var anyPostBody: Data { .init("any-body".utf8) }
     
     var anyGETRequest: RequestTypeSpy {
-        RequestTypeSpy(path: "/any-path", method: .get, body: nil)
+        .init(path: "/any-path", method: .get, body: nil)
+    }
+    
+    var anyPostRequest: RequestTypeSpy {
+        .init(path: "/any-path", method: .post, body: anyPostBody)
     }
     
     var anyGETHttpURLResponse: HTTPURLResponse {
         .init(url: anyGETRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    }
+    
+    var anyPostHttpURLResponse: HTTPURLResponse {
+        .init(url: anyPostRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
     
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
