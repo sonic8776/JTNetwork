@@ -75,6 +75,18 @@ class URLSessionHTTPClientTests: XCTestCase {
         let expectedData = Data()
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
+    
+    func test_request_succeedOnGetHTTPURLResponseWithNilResponse() {
+        let requestType = anyGETRequest
+        let expectedError = HTTPClientError.cannotFindDataOrResponse
+        assertOnValueResult(requestType: requestType, expectedData: nil, expectedResponse: nil, expectedError: expectedError)
+    }
+    
+    func test_request_succeedOnPostHTTPURLResponseWithNilResponse() {
+        let requestType = anyPostRequest
+        let expectedError = HTTPClientError.cannotFindDataOrResponse
+        assertOnValueResult(requestType: requestType, expectedData: nil, expectedResponse: nil, expectedError: expectedError)
+    }
 }
 
 // MARK: - Helpers
