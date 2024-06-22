@@ -26,7 +26,7 @@ class URLSessionHTTPClient: HTTPClient {
                 response.statusCode == 200,
                 let data = data
             else {
-                completion(.failure(.networkError))
+                completion(.failure(.cannotFindDataOrResponse))
                 return
             }
             

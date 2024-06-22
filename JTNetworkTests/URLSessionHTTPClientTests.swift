@@ -214,7 +214,7 @@ private extension URLSessionHTTPClientTests {
         }
     }
     
-    func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?, file: StaticString = #file, line: UInt = #line) {
+    func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?, expectedError: HTTPClientError? = nil, file: StaticString = #file, line: UInt = #line) {
         let receivedResult = makeResult(requestType: requestType, expectedError: nil, expectedData: expectedData, expectedResponse: expectedResponse)
         // Assert
         switch receivedResult {
@@ -227,8 +227,12 @@ private extension URLSessionHTTPClientTests {
             // 另一種寫法
 //            let isEqual = httpURLResposne == expectedResponse
 //            XCTAssertTrue(isEqual)
-        default:
-            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)", file: file, line: line)
+            
+        case let .failure(httpClientError):
+            XCTAssertEqual(httpClientError, expectedError)
+            
+//        default:
+//            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)", file: file, line: line)
         }
     }
 }

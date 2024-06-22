@@ -9,6 +9,9 @@ import Foundation
 
 enum HTTPClientError: Error {
     case networkError
+    case cannotFindDataOrResponse
+    
+    
 }
 
 protocol HTTPClient {
