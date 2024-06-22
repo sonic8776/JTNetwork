@@ -33,39 +33,15 @@ class URLSessionHTTPClientTests: XCTestCase {
     // MARK: - Failure Cases
     
     func test_request_failsOnGetRequestError() {
-        // Arrange
-        let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
-        let expectedError = HTTPClientError.networkError
-        let expectation = expectation(description: "Wait for completion...")
-        URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
-        let sut = makeSUT()
-        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
-        
-        // Action
-        sut.request(withRequestType: requestType) { result in
-            expectation.fulfill()
-            receivedResult = result
-        }
-        wait(for: [expectation], timeout: 1.0)
-        
-        // Assert
-        switch receivedResult {
-        case let .failure(receivedError):
-            XCTAssertEqual(expectedError, receivedError)
-        default:
-            XCTFail("Should receive error: \(expectedError)")
-        }
-        
-//        let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
-//        let expectedError = HTTPClientError.networkError
-//        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
-//        XCTAssertEqual(expectedError, receivedError)
+        let requestType = anyGETRequest
+        let expectedError = anyError
+        assertOnErrorResult(requestType: requestType, expectedError: expectedError)
     }
     
     func test_request_failsOnPostRequestError() {
         // Arrange
-        let requestType = RequestTypeSpy(path: "/any-path", method: .post, body: nil)
-        let expectedError = HTTPClientError.networkError
+        let requestType = anyPostRequest
+        let expectedError = anyError
         let expectation = expectation(description: "Wait for completion...")
         URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
         let sut = makeSUT()
@@ -256,10 +232,37 @@ private extension URLSessionHTTPClientTests {
         .init(url: anyPostRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
     
+    var anyError: HTTPClientError {
+        HTTPClientError.networkError
+    }
+    
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
         let session = URLSession(configuration: URLSessionHTTPClientTests.sessionConfiguration)
         let sut = URLSessionHTTPClient(session: session)
         return sut
+    }
+    
+    func assertOnErrorResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?) {
+        // Arrange
+        let expectation = expectation(description: "Wait for completion...")
+        URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
+        let sut = makeSUT()
+        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+        case let .failure(receivedError):
+            XCTAssertEqual(expectedError, receivedError)
+        default:
+            XCTFail("Should receive error: \(expectedError)")
+        }
     }
     
     func makeResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Result<(Data, HTTPURLResponse), HTTPClientError> {
