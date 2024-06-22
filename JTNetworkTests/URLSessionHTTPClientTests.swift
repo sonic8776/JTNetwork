@@ -169,10 +169,10 @@ private extension URLSessionHTTPClientTests {
         return sut
     }
     
-    func assertOnErrorResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?) {
+    func makeResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?, expectedData: Data?, expectedResponse: HTTPURLResponse?) -> HTTPClientResult {
         // Arrange
         let expectation = expectation(description: "Wait for completion...")
-        URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
+        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error: expectedError)
         let sut = makeSUT()
         var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
         
@@ -183,79 +183,36 @@ private extension URLSessionHTTPClientTests {
         }
         wait(for: [expectation], timeout: 1.0)
         
+        return receivedResult
+    }
+    
+    func assertOnErrorResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?, file: StaticString = #file, line: UInt = #line) {
+        let receivedResult = makeResult(requestType: requestType, expectedError: expectedError, expectedData: nil, expectedResponse: nil)
+        
         // Assert
         switch receivedResult {
         case let .failure(receivedError):
-            XCTAssertEqual(expectedError, receivedError)
+            XCTAssertEqual(expectedError, receivedError, file: file, line: line)
         default:
-            XCTFail("Should receive error: \(expectedError)")
+            XCTFail("Should receive error: \(expectedError)", file: file, line: line)
         }
     }
     
-    func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?) {
-        // Arrange
-        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
-        let sut = makeSUT()
-        var receivedResult: HTTPClientResult!
-        let expectation = expectation(description: "Wait for completion...")
-        
-        // Action
-        sut.request(withRequestType: requestType) { result in
-            expectation.fulfill()
-            receivedResult = result
-        }
-        wait(for: [expectation], timeout: 1.0)
-        
+    func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?, file: StaticString = #file, line: UInt = #line) {
+        let receivedResult = makeResult(requestType: requestType, expectedError: nil, expectedData: expectedData, expectedResponse: expectedResponse)
         // Assert
         switch receivedResult {
             
         case let .success((data, httpURLResposne)):
-            XCTAssertEqual(data, expectedData)
-            XCTAssertEqual(httpURLResposne.url, expectedResponse?.url)
-            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse?.statusCode)
+            XCTAssertEqual(data, expectedData, file: file, line: line)
+            XCTAssertEqual(httpURLResposne.url, expectedResponse?.url, file: file, line: line)
+            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse?.statusCode, file: file, line: line)
             
             // 另一種寫法
 //            let isEqual = httpURLResposne == expectedResponse
 //            XCTAssertTrue(isEqual)
         default:
-            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
-        }
-    }
-    
-    func makeResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> Result<(Data, HTTPURLResponse), HTTPClientError> {
-        URLProtocolStub.stub(data: data, response: response, error: error)
-        let sut = makeSUT(file: file, line: line)
-        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
-        let expectation = expectation(description: "Wait for completion...")
-        sut.request(withRequestType: requestType) { result in
-            expectation.fulfill()
-            receivedResult = result
-        }
-        wait(for: [expectation], timeout: 1.0)
-        return receivedResult
-    }
-    
-    func makeErrorResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> HTTPClientError? {
-        let result = makeResult(with: requestType, data: data, response: response, error: error)
-        switch result {
-        case .failure(let error):
-            return error
-            
-        default:
-            XCTFail("Should return error: \(String(describing: error))")
-            return nil
-        }
-    }
-    
-    func makeValueResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?, file: StaticString = #file, line: UInt = #line) -> (Data, HTTPURLResponse)? {
-        let result = makeResult(with: requestType, data: data, response: response, error: error)
-        switch result {
-        case let .success((data, httpURLResponse)):
-            return (data, httpURLResponse)
-            
-        default:
-            XCTFail("Should return data: \(data) and response: \(response)!")
-            return nil
+            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)", file: file, line: line)
         }
     }
 }
