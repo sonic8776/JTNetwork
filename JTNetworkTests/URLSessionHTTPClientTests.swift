@@ -8,6 +8,13 @@
 import XCTest
 @testable import JTNetwork
 
+/*
+ 在撰寫單元測試的程式碼時，有個 3A 原則，來輔助設計測試程式，可以讓測試程式更好懂。3A 原則如下：
+ Arrange: 初始化目標物件、相依物件、方法參數、預期結果，或是預期與相依物件的互動方式
+ Action: 呼叫目標物件的方法
+ Assert: 驗證是否符合預期
+ */
+
 class URLSessionHTTPClientTests: XCTestCase {
     static var sessionConfiguration: URLSessionConfiguration = .ephemeral
     override class func setUp() {
@@ -21,10 +28,33 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_request_failsOnGetRequestError() {
+        // Arrange
         let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
         let expectedError = HTTPClientError.networkError
-        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
-        XCTAssertEqual(expectedError, receivedError)
+        let expectation = expectation(description: "Wait for completion...")
+        URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
+        let sut = makeSUT()
+        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+        case let .failure(receivedError):
+            XCTAssertEqual(expectedError, receivedError)
+        default:
+            XCTFail("Should receive error: \(expectedError)")
+        }
+        
+//        let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
+//        let expectedError = HTTPClientError.networkError
+//        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
+//        XCTAssertEqual(expectedError, receivedError)
     }
 }
 
