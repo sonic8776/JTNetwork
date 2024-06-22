@@ -16,6 +16,9 @@ import XCTest
  */
 
 class URLSessionHTTPClientTests: XCTestCase {
+    
+    typealias HTTPClientResult = Result<(Data, HTTPURLResponse), HTTPClientError>
+    
     static var sessionConfiguration: URLSessionConfiguration = .ephemeral
     override class func setUp() {
         super.setUp()
@@ -26,6 +29,8 @@ class URLSessionHTTPClientTests: XCTestCase {
         super.tearDown()
         URLProtocolStub.stopInterceptingRequest()
     }
+    
+    // MARK: - Failure Cases
     
     func test_request_failsOnGetRequestError() {
         // Arrange
@@ -64,7 +69,7 @@ class URLSessionHTTPClientTests: XCTestCase {
         let expectation = expectation(description: "Wait for completion...")
         URLProtocolStub.stub(data: nil, response: nil, error: expectedError)
         let sut = makeSUT()
-        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        var receivedResult: HTTPClientResult!
         
         // Action
         sut.request(withRequestType: requestType) { result in
@@ -79,6 +84,38 @@ class URLSessionHTTPClientTests: XCTestCase {
             XCTAssertEqual(expectedError, receivedError)
         default:
             XCTFail("Should receive error: \(expectedError)")
+        }
+    }
+    
+    // MARK: - Successful Cases
+    
+    func test_request_succeedOnGetHTTPURLResponseWithData() {
+        // Arrange
+        let requestType = anyGETRequest
+        let expectedData = anyData
+        let expectedResponse = anyGETHttpURLResponse
+        URLProtocolStub.stub(data: expectedData, response: expectedResponse, error:  nil)
+        let sut = makeSUT()
+        var receivedResult: HTTPClientResult!
+        let expectation = expectation(description: "Wait for completion...")
+        
+        // Action
+        sut.request(withRequestType: requestType) { result in
+            expectation.fulfill()
+            receivedResult = result
+        }
+        wait(for: [expectation], timeout: 1.0)
+        
+        // Assert
+        switch receivedResult {
+            
+        case let .success((data, httpURLResposne)):
+            XCTAssertEqual(data, expectedData)
+            XCTAssertEqual(httpURLResposne.url, expectedResponse.url)
+            XCTAssertEqual(httpURLResposne.statusCode, expectedResponse.statusCode)
+            
+        default:
+            XCTFail("Should receive data: \(expectedData), response: \(expectedResponse)")
         }
     }
 }
@@ -162,6 +199,16 @@ private extension URLSessionHTTPClientTests {
 
 // MARK: - Factory Methods
 private extension URLSessionHTTPClientTests {
+    var anyData: Data { .init("any-data".utf8) }
+    
+    var anyGETRequest: RequestTypeSpy {
+        RequestTypeSpy(path: "/any-path", method: .get, body: nil)
+    }
+    
+    var anyGETHttpURLResponse: HTTPURLResponse {
+        .init(url: anyGETRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    }
+    
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
         let session = URLSession(configuration: URLSessionHTTPClientTests.sessionConfiguration)
         let sut = URLSessionHTTPClient(session: session)
