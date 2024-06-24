@@ -62,6 +62,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     
     // MARK: - Edge Cases for successfully response
     
+    // 這邊不帶 nil data 因為 URLSession 會自動轉成 0 bytes empty data
     func test_request_succeedWithNilDataOnGetHTTPURLResponseWithEmptyData() {
         let requestType = anyGETRequest
         let expectedResponse = anyGETHttpURLResponse
@@ -76,6 +77,10 @@ class URLSessionHTTPClientTests: XCTestCase {
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
     
+    // 當 dataTask 回傳的 data, response = nil 時
+    // URLSessionHTTPClient 是否能正確回傳預期的 HTTPClientError
+    // 雖然有傳入 expectedError，但其實 makeResult 並未帶入 error -> dataTask 沒有回傳 error
+    // 是 URLSessionHTTPClient 自己判斷 data, response = nil 時額外回傳的 error
     func test_request_succeedOnGetHTTPURLResponseWithNilResponse() {
         let requestType = anyGETRequest
         let expectedError = HTTPClientError.cannotFindDataOrResponse
