@@ -15,6 +15,10 @@
 		D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */; };
 		D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */; };
 		D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */; };
+		D09C02782C291F3300FAA4B8 /* URLSessionHTTPClientTests_practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C02772C291F3300FAA4B8 /* URLSessionHTTPClientTests_practice.swift */; };
+		D09C027A2C291FA100FAA4B8 /* URLSessionHTTPClient_practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C02792C291FA100FAA4B8 /* URLSessionHTTPClient_practice.swift */; };
+		D09C027C2C291FF500FAA4B8 /* RequestType_practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C027B2C291FF500FAA4B8 /* RequestType_practice.swift */; };
+		D09C027E2C29203A00FAA4B8 /* HTTPClient_practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C027D2C29203A00FAA4B8 /* HTTPClient_practice.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +41,10 @@
 		D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientEndToEndTests.swift; sourceTree = "<group>"; };
 		D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
+		D09C02772C291F3300FAA4B8 /* URLSessionHTTPClientTests_practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests_practice.swift; sourceTree = "<group>"; };
+		D09C02792C291FA100FAA4B8 /* URLSessionHTTPClient_practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient_practice.swift; sourceTree = "<group>"; };
+		D09C027B2C291FF500FAA4B8 /* RequestType_practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestType_practice.swift; sourceTree = "<group>"; };
+		D09C027D2C29203A00FAA4B8 /* HTTPClient_practice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient_practice.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +91,9 @@
 				D02EAD152C21B7BC00406EE3 /* HTTPClient.swift */,
 				D02EAD172C21B8A400406EE3 /* RequestType.swift */,
 				D02EAD192C21BD1700406EE3 /* URLSessionHTTPClient.swift */,
+				D09C027D2C29203A00FAA4B8 /* HTTPClient_practice.swift */,
+				D09C027B2C291FF500FAA4B8 /* RequestType_practice.swift */,
+				D09C02792C291FA100FAA4B8 /* URLSessionHTTPClient_practice.swift */,
 			);
 			path = JTNetwork;
 			sourceTree = "<group>";
@@ -93,6 +104,7 @@
 				D02EAD0A2C21B74F00406EE3 /* JTNetworkTests.swift */,
 				D02EAD1B2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift */,
 				D02EAD362C245A1C00406EE3 /* URLSessionHTTPClientTests.swift */,
+				D09C02772C291F3300FAA4B8 /* URLSessionHTTPClientTests_practice.swift */,
 			);
 			path = JTNetworkTests;
 			sourceTree = "<group>";
@@ -208,7 +220,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D02EAD162C21B7BC00406EE3 /* HTTPClient.swift in Sources */,
+				D09C027E2C29203A00FAA4B8 /* HTTPClient_practice.swift in Sources */,
+				D09C027C2C291FF500FAA4B8 /* RequestType_practice.swift in Sources */,
 				D02EAD182C21B8A400406EE3 /* RequestType.swift in Sources */,
+				D09C027A2C291FA100FAA4B8 /* URLSessionHTTPClient_practice.swift in Sources */,
 				D02EAD1A2C21BD1700406EE3 /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -219,6 +234,7 @@
 			files = (
 				D02EAD0B2C21B74F00406EE3 /* JTNetworkTests.swift in Sources */,
 				D02EAD1C2C21C39E00406EE3 /* HTTPClientEndToEndTests.swift in Sources */,
+				D09C02782C291F3300FAA4B8 /* URLSessionHTTPClientTests_practice.swift in Sources */,
 				D02EAD372C245A1C00406EE3 /* URLSessionHTTPClientTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
