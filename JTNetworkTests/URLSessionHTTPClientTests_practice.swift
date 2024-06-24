@@ -22,7 +22,15 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
     
     // 10.
     func test_request_failsOnGetRequestError() {
-        let requestType = RequestTypeSpy(path: "/any-path", method: .get, body: nil)
+        let requestType = anyGETRequest
+        let expectedError = HTTPClientError.networkError
+        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
+        XCTAssertEqual(expectedError, receivedError)
+    }
+    
+    // 11.
+    func test_request_failsOnPostRequestError() {
+        let requestType = anyPOSTRequest
         let expectedError = HTTPClientError.networkError
         let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
         XCTAssertEqual(expectedError, receivedError)
@@ -32,6 +40,18 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
 // MARK: - Helpers
 
 extension URLSessionHTTPClientTests_practice {
+    
+    var anyGETRequest: RequestTypeSpy {
+        .init(path: "/any-path", method: .get, body: nil)
+    }
+    
+    var anyPOSTRequest: RequestTypeSpy {
+        .init(path: "/any-path", method: .post, body: anyPOSTBody)
+    }
+    
+    var anyPOSTBody: Data {
+        .init("any-body".utf8)
+    }
     
     // 2.
     // Mock response completion
