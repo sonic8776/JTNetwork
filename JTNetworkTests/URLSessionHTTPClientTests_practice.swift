@@ -25,7 +25,7 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
     // 10.
     func test_request_failsOnGetRequestError() {
         let requestType = anyGETRequest
-        let expectedError = HTTPClientError.networkError
+        let expectedError = HTTPClientError_practice.networkError
         let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
         XCTAssertEqual(expectedError, receivedError)
     }
@@ -33,7 +33,7 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
     // 11.
     func test_request_failsOnPostRequestError() {
         let requestType = anyPOSTRequest
-        let expectedError = HTTPClientError.networkError
+        let expectedError = HTTPClientError_practice.networkError
         let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
         XCTAssertEqual(expectedError, receivedError)
     }
@@ -101,16 +101,16 @@ extension URLSessionHTTPClientTests_practice {
     
     // 3.
     // Mock RequestType
-    struct RequestTypeSpy: RequestType {
+    struct RequestTypeSpy: RequestType_practice {
         var baseURL: URL = URL(string: "https://any-url.com")!
         var path: String
         var queryItems: [URLQueryItem] = []
-        var method: JTNetwork.HTTPMethod
+        var method: JTNetwork.HTTPMethod_practice
         var headers: [String : String]? = nil
         var body: Data?
         
         // Only provide parameters that need to test
-        init(path: String, method: HTTPMethod, body: Data?) {
+        init(path: String, method: HTTPMethod_practice, body: Data?) {
             self.path = path
             self.method = method
             self.body = body
@@ -178,22 +178,22 @@ extension URLSessionHTTPClientTests_practice {
 extension URLSessionHTTPClientTests_practice {
     
     // 1.
-    func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient {
+    func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient_practice {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [URLProtocolStub.self]
         let session = URLSession(configuration: config)
-        let sut = URLSessionHTTPClient(session: .shared)
+        let sut = URLSessionHTTPClient_practice(session: .shared)
         return sut
     }
     
     // 提供介面帶入模擬的 request 和 response
     // 回傳模擬的 HTTPClient request completion 回傳的型別，也就是 Result<(Data, HTTPURLResponse), HTTPClientError>
     // 5.
-    func makeResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?,
-                    file: StaticString = #file, line: UInt = #line) -> Result<(Data, HTTPURLResponse), HTTPClientError> {
+    func makeResult(with requestType: RequestType_practice, data: Data?, response: URLResponse?, error: Error?,
+                    file: StaticString = #file, line: UInt = #line) -> Result<(Data, HTTPURLResponse), HTTPClientError_practice> {
         URLProtocolStub.stub(data: data, response: response, error: error)
         let sut = makeSUT(file: file, line: line)
-        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError>!
+        var receivedResult: Result<(Data, HTTPURLResponse), HTTPClientError_practice>!
         let expectation = expectation(description: "Wait for completion...")
         sut.request(withRequestType: requestType) { result in
             expectation.fulfill()
@@ -204,8 +204,8 @@ extension URLSessionHTTPClientTests_practice {
     }
     
     // 6.
-    func makeErrorResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?,
-                         file: StaticString = #file, line: UInt = #line) -> HTTPClientError? {
+    func makeErrorResult(with requestType: RequestType_practice, data: Data?, response: URLResponse?, error: Error?,
+                         file: StaticString = #file, line: UInt = #line) -> HTTPClientError_practice? {
         let result = makeResult(with: requestType, data: data, response: response, error: error)
         switch result {
         case .failure(let error):
@@ -218,7 +218,7 @@ extension URLSessionHTTPClientTests_practice {
     }
     
     // 7.
-    func makeValueResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?,
+    func makeValueResult(with requestType: RequestType_practice, data: Data?, response: URLResponse?, error: Error?,
                          file: StaticString = #file, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
         let result = makeResult(with: requestType, data: data, response: response, error: error)
         switch result {
