@@ -17,7 +17,7 @@ protocol RequestType_practice {
     var path: String { get }
     var queryItems: [URLQueryItem] { get } // URLQueryItem
     var fullURL: URL { get }
-    var method: HTTPMethod { get }
+    var method: HTTPMethod_practice { get }
     var headers: [String: String]? { get }
     var body: Data? { get }
     var urlRequest: URLRequest { get }

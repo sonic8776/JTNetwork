@@ -7,7 +7,7 @@
 
 import Foundation
 
-class URLSessionHTTPClient_practice: HTTPClient {
+class URLSessionHTTPClient_practice: HTTPClient_practice {
     
     let session: URLSession
     
@@ -15,7 +15,7 @@ class URLSessionHTTPClient_practice: HTTPClient {
         self.session = session
     }
     
-    func request(withRequestType requestType: RequestType, completion: @escaping (Result<(Data, HTTPURLResponse), HTTPClientError>) -> Void) {
+    func request(withRequestType requestType: RequestType_practice, completion: @escaping (Result<(Data, HTTPURLResponse), HTTPClientError_practice>) -> Void) {
         session.dataTask(with: requestType.urlRequest) { data, response, error in
             
             if let error {
