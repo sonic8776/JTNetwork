@@ -35,7 +35,7 @@ extension URLSessionHTTPClientTests_practice {
     
     // 2.
     // Mock response completion
-    struct RequestAndResponseStub {
+    struct ResponseStub {
         let data: Data?
         let resposne: URLResponse?
         let error: Error?
@@ -62,10 +62,10 @@ extension URLSessionHTTPClientTests_practice {
     // URLProtocol is a class
     // 4.
     class URLProtocolStub: URLProtocol {
-        private static var requestAndResponseStub: RequestAndResponseStub?
+        private static var requestAndResponseStub: ResponseStub?
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
-            requestAndResponseStub = RequestAndResponseStub(data: data, resposne: response, error: error)
+            requestAndResponseStub = ResponseStub(data: data, resposne: response, error: error)
         }
         
         // 開始攔截請求，要向 URLProtocol 註冊這個 class
