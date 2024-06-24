@@ -197,7 +197,7 @@ private extension URLSessionHTTPClientTests {
         return sut
     }
     
-    func makeResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?, expectedData: Data?, expectedResponse: HTTPURLResponse?) -> HTTPClientResult {
+    func makeResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?, expectedError: HTTPClientError?) -> HTTPClientResult {
         // Arrange
         let expectation = expectation(description: "Wait for completion...")
         URLProtocolStub.stub(data: expectedData, response: expectedResponse, error: expectedError)
@@ -215,7 +215,7 @@ private extension URLSessionHTTPClientTests {
     }
     
     func assertOnErrorResult(requestType: RequestTypeSpy, expectedError: HTTPClientError?, file: StaticString = #file, line: UInt = #line) {
-        let receivedResult = makeResult(requestType: requestType, expectedError: expectedError, expectedData: nil, expectedResponse: nil)
+        let receivedResult = makeResult(requestType: requestType, expectedData: nil, expectedResponse: nil, expectedError: expectedError)
         
         // Assert
         switch receivedResult {
@@ -227,7 +227,7 @@ private extension URLSessionHTTPClientTests {
     }
     
     func assertOnValueResult(requestType: RequestTypeSpy, expectedData: Data?, expectedResponse: HTTPURLResponse?, expectedError: HTTPClientError? = nil, file: StaticString = #file, line: UInt = #line) {
-        let receivedResult = makeResult(requestType: requestType, expectedError: nil, expectedData: expectedData, expectedResponse: expectedResponse)
+        let receivedResult = makeResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse, expectedError: nil)
         // Assert
         switch receivedResult {
             
