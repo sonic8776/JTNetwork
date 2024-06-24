@@ -9,6 +9,7 @@ import Foundation
 
 enum HTTPClientError_practice: Error {
     case networkError
+    case cannotFindDataOrResponse
 }
 
 protocol HTTPClient_practice {
