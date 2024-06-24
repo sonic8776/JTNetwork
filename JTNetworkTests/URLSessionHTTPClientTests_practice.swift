@@ -20,6 +20,8 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
         URLProtocolStub.stopInterceptionRequest()
     }
     
+    // MARK: - Failure Cases
+    
     // 10.
     func test_request_failsOnGetRequestError() {
         let requestType = anyGETRequest
@@ -34,6 +36,30 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
         let expectedError = HTTPClientError.networkError
         let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: expectedError)
         XCTAssertEqual(expectedError, receivedError)
+    }
+    
+    // MARK: - Happy Cases
+    
+    // 12.
+    func test_request_succeedsOnGetHTTPURLResponseWithData() {
+        let requestType = anyGETRequest
+        let expectedData = anyData
+        let expectedResponse = anyGETResponse
+        let receivedResponse = makeValueResult(with: requestType, data: expectedData, response: expectedResponse, error: nil)
+        XCTAssertEqual(expectedData, receivedResponse?.data)
+        XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
+        XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
+    }
+    
+    // 13.
+    func test_request_succeedsOnPostHTTPURLResponseWithData() {
+        let requestType = anyPOSTRequest
+        let expectedData = anyData
+        let expectedResponse = anyPOSTResponse
+        let receivedResponse = makeValueResult(with: requestType, data: expectedData, response: expectedResponse, error: nil)
+        XCTAssertEqual(expectedData, receivedResponse?.data)
+        XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
+        XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
     }
 }
 
@@ -51,6 +77,18 @@ extension URLSessionHTTPClientTests_practice {
     
     var anyPOSTBody: Data {
         .init("any-body".utf8)
+    }
+    
+    var anyGETResponse: HTTPURLResponse {
+        .init(url: anyGETRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    }
+    
+    var anyPOSTResponse: HTTPURLResponse {
+        .init(url: anyPOSTRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    }
+    
+    var anyData: Data {
+        .init("any-data".utf8)
     }
     
     // 2.
@@ -181,7 +219,7 @@ extension URLSessionHTTPClientTests_practice {
     
     // 7.
     func makeValueResult(with requestType: RequestType, data: Data?, response: URLResponse?, error: Error?,
-                         file: StaticString = #file, line: UInt = #line) -> (Data, HTTPURLResponse)? {
+                         file: StaticString = #file, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
         let result = makeResult(with: requestType, data: data, response: response, error: error)
         switch result {
         case let .success((data, response)):
