@@ -39,7 +39,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_request_failsOnPostRequestError() {
-        let requestType = anyPostRequest
+        let requestType = anyPOSTRequest
         let expectedError = anyError
         assertOnErrorResult(requestType: requestType, expectedError: expectedError)
     }
@@ -54,9 +54,9 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_request_succeedOnPostHTTPURLResponseWithData() {
-        let requestType = anyPostRequest
+        let requestType = anyPOSTRequest
         let expectedData = anyData
-        let expectedResponse = anyPostHttpURLResponse
+        let expectedResponse = anyPOSTHttpURLResponse
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
     
@@ -70,8 +70,8 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_request_succeedWithNilDataOnPostHTTPURLResponseWithEmptyData() {
-        let requestType = anyPostRequest
-        let expectedResponse = anyPostHttpURLResponse
+        let requestType = anyPOSTRequest
+        let expectedResponse = anyPOSTHttpURLResponse
         let expectedData = Data()
         assertOnValueResult(requestType: requestType, expectedData: expectedData, expectedResponse: expectedResponse)
     }
@@ -83,7 +83,7 @@ class URLSessionHTTPClientTests: XCTestCase {
     }
     
     func test_request_succeedOnPostHTTPURLResponseWithNilResponse() {
-        let requestType = anyPostRequest
+        let requestType = anyPOSTRequest
         let expectedError = HTTPClientError.cannotFindDataOrResponse
         assertOnValueResult(requestType: requestType, expectedData: nil, expectedResponse: nil, expectedError: expectedError)
     }
@@ -169,22 +169,22 @@ private extension URLSessionHTTPClientTests {
 // MARK: - Factory Methods
 private extension URLSessionHTTPClientTests {
     var anyData: Data { .init("any-data".utf8) }
-    var anyPostBody: Data { .init("any-body".utf8) }
+    var anyPOSTBody: Data { .init("any-body".utf8) }
     
     var anyGETRequest: RequestTypeSpy {
         .init(path: "/any-path", method: .get, body: nil)
     }
     
-    var anyPostRequest: RequestTypeSpy {
-        .init(path: "/any-path", method: .post, body: anyPostBody)
+    var anyPOSTRequest: RequestTypeSpy {
+        .init(path: "/any-path", method: .post, body: anyPOSTBody)
     }
     
     var anyGETHttpURLResponse: HTTPURLResponse {
         .init(url: anyGETRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
     
-    var anyPostHttpURLResponse: HTTPURLResponse {
-        .init(url: anyPostRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
+    var anyPOSTHttpURLResponse: HTTPURLResponse {
+        .init(url: anyPOSTRequest.fullURL, statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
     
     var anyError: HTTPClientError {
