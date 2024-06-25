@@ -87,6 +87,22 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
         XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
         XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
     }
+    
+    // 16.
+    func test_request_succeedOnGetHTTPURLResponseWithNilResponse() {
+        let requestType = anyGETRequest
+        let expectedError = HTTPClientError_practice.cannotFindDataOrResponse
+        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: nil)
+        XCTAssertEqual(expectedError, receivedError)
+    }
+    
+    // 17.
+    func test_request_succeedOnPostHTTPURLResponseWithNilResponse() {
+        let requestType = anyPOSTRequest
+        let expectedError = HTTPClientError_practice.cannotFindDataOrResponse
+        let receivedError = makeErrorResult(with: requestType, data: nil, response: nil, error: nil)
+        XCTAssertEqual(expectedError, receivedError)
+    }
 }
 
 // MARK: - Helpers
