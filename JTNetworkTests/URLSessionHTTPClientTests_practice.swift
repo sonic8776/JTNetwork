@@ -10,9 +10,11 @@ import XCTest
 
 final class URLSessionHTTPClientTests_practice: XCTestCase {
     
+    static let sessionConfiguration = URLSessionConfiguration.ephemeral
+    
     // 8.
     override class func setUp() {
-        URLProtocolStub.startInterceptingRequest()
+        URLProtocolStub.startInterceptingRequest(forConfiguration: URLSessionHTTPClientTests_practice.sessionConfiguration)
     }
     
     // 9.
@@ -127,8 +129,8 @@ extension URLSessionHTTPClientTests_practice {
         }
         
         // 開始攔截請求，要向 URLProtocol 註冊這個 class
-        static func startInterceptingRequest() {
-            URLProtocol.registerClass(URLProtocolStub.self)
+        static func startInterceptingRequest(forConfiguration configuration: URLSessionConfiguration) {
+            configuration.protocolClasses = [URLProtocolStub.self]
         }
         
         // 停止攔截請求，要向 URLProtocol 取消註冊這個 class
@@ -179,10 +181,8 @@ extension URLSessionHTTPClientTests_practice {
     
     // 1.
     func makeSUT(file: StaticString = #file, line: UInt = #line) -> HTTPClient_practice {
-        let config = URLSessionConfiguration.ephemeral
-        config.protocolClasses = [URLProtocolStub.self]
-        let session = URLSession(configuration: config)
-        let sut = URLSessionHTTPClient_practice(session: .shared)
+        let session = URLSession(configuration: URLSessionHTTPClientTests_practice.sessionConfiguration)
+        let sut = URLSessionHTTPClient_practice(session: session)
         return sut
     }
     
