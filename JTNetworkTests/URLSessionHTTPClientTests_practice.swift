@@ -122,10 +122,10 @@ extension URLSessionHTTPClientTests_practice {
     // URLProtocol is a class
     // 4.
     class URLProtocolStub: URLProtocol {
-        private static var requestAndResponseStub: ResponseStub?
+        private static var responseStub: ResponseStub?
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
-            requestAndResponseStub = ResponseStub(data: data, resposne: response, error: error)
+            responseStub = ResponseStub(data: data, resposne: response, error: error)
         }
         
         // 開始攔截請求，要向 URLProtocol 註冊這個 class
@@ -136,7 +136,7 @@ extension URLSessionHTTPClientTests_practice {
         // 停止攔截請求，要向 URLProtocol 取消註冊這個 class
         static func stopInterceptionRequest() {
             URLProtocol.unregisterClass(URLProtocolStub.self)
-            requestAndResponseStub = nil
+            responseStub = nil
         }
         
         // ----- override URLProtocol methods -----
@@ -150,20 +150,20 @@ extension URLSessionHTTPClientTests_practice {
         }
         
         override func startLoading() {
-            guard let requestAndResponseStub = URLProtocolStub.requestAndResponseStub else {
+            guard let responseStub = URLProtocolStub.responseStub else {
                 client?.urlProtocolDidFinishLoading(self)
                 return
             }
             
-            if let data = requestAndResponseStub.data {
+            if let data = responseStub.data {
                 client?.urlProtocol(self, didLoad: data)
             }
             
-            if let resposne = requestAndResponseStub.resposne {
+            if let resposne = responseStub.resposne {
                 client?.urlProtocol(self, didReceive: resposne, cacheStoragePolicy: .notAllowed)
             }
             
-            if let error = requestAndResponseStub.error {
+            if let error = responseStub.error {
                 client?.urlProtocol(self, didFailWithError: error)
             }
             
