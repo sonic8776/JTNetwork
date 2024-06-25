@@ -23,13 +23,13 @@ class URLSessionHTTPClient_practice: HTTPClient_practice {
                 return
             }
             
-            if let data, let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                completion(.success((data, response)))
-                return
-            } else {
-                completion(.failure(.networkError))
+            guard let data,
+                  let response = response as? HTTPURLResponse,
+                  response.statusCode == 200 else {
+                completion(.failure(.cannotFindDataOrResponse))
                 return
             }
+            completion(.success((data, response)))
             
         }.resume()
     }
