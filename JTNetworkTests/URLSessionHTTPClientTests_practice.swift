@@ -63,6 +63,30 @@ final class URLSessionHTTPClientTests_practice: XCTestCase {
         XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
         XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
     }
+    
+    // MARK: - Edge Cases for successfully response
+    
+    // 14.
+    func test_request_succeedsWithNilDataOnGetHTTPURLResponseWithEmptyData() {
+        let requestType = anyGETRequest
+        let emptyData = Data()
+        let expectedResponse = anyGETResponse
+        let receivedResponse = makeValueResult(with: requestType, data: nil, response: expectedResponse, error: nil)
+        XCTAssertEqual(emptyData, receivedResponse?.data)
+        XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
+        XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
+    }
+    
+    // 15.
+    func test_request_succeedsWithNilDataOnPostHTTPURLResponseWithEmptyData() {
+        let requestType = anyPOSTRequest
+        let emptyData = Data()
+        let expectedResponse = anyPOSTResponse
+        let receivedResponse = makeValueResult(with: requestType, data: nil, response: expectedResponse, error: nil)
+        XCTAssertEqual(emptyData, receivedResponse?.data)
+        XCTAssertEqual(expectedResponse.url, receivedResponse?.response.url)
+        XCTAssertEqual(expectedResponse.statusCode, receivedResponse?.response.statusCode)
+    }
 }
 
 // MARK: - Helpers
