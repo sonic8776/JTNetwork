@@ -96,17 +96,17 @@ class URLSessionHTTPClientTests: XCTestCase {
 
 // MARK: - Helpers
 private extension URLSessionHTTPClientTests {
-    struct ResponeStub {
+    struct ResponseStub {
         let data: Data?
         let response: URLResponse?
         let error: Error?
     }
     
     class URLProtocolStub: URLProtocol {
-        private static var stub: ResponeStub?
+        private static var stub: ResponseStub?
         
         static func stub(data: Data?, response: URLResponse?, error: Error?) {
-            stub = ResponeStub.init(data: data, response: response, error: error)
+            stub = ResponseStub.init(data: data, response: response, error: error)
         }
         
         class func startInterceptingRequest(forConfiguration configuration: URLSessionConfiguration) {
